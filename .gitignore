@@ -1,0 +1,82 @@
+# ============================================
+# Prueba Fullstack MID — Rails + Vue (2026-11)
+# ============================================
+
+# --- Secretos y credenciales ---
+# La base no usa credenciales cifradas en desarrollo.
+# Rails genera tmp/development_secret.txt automáticamente.
+/config/master.key
+/config/credentials.yml.enc
+/config/credentials/*.yml.enc
+/config/credentials/*.key
+*.key
+*.pem
+*.p12
+*.pfx
+.env
+.env.*
+!.env.example
+
+# --- Rails: logs y temporales ---
+/log/*
+!/log/.keep
+/tmp/*
+!/tmp/.keep
+/tmp/pids/*
+!/tmp/pids/
+!/tmp/pids/.keep
+
+# --- Rails: almacenamiento y assets generados ---
+/storage/*
+!/storage/.keep
+/public/assets
+/public/packs
+/public/packs-test
+/public/uploads
+
+# Tailwind se compila al arrancar; no versionar el CSS generado.
+# vue.js sí se versiona porque es la librería que usa la vista.
+/app/assets/builds/*
+!/app/assets/builds/vue.js
+
+# --- Dependencias ---
+/.bundle
+/vendor/bundle
+/node_modules
+/yarn-error.log*
+/.yarn/
+
+# --- Configuración local / overrides ---
+/docker-compose.override.yml
+/config/settings.local.yml
+/config/settings/*.local.yml
+/config/environments/*.local.rb
+
+# --- Base de datos local ---
+/db/*.sqlite3
+/db/*.sqlite3-*
+/db/*.dump
+
+# --- Tests y cobertura ---
+/coverage/
+/test-reports/
+/.rspec_status
+
+# --- Herramientas y sistema operativo ---
+.DS_Store
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/
+.byebug_history
+.pry_history
+.playwright-mcp/
+.ruby-lsp/
+.solargraph.yml
+
+# --- Otros ---
+*.log
+*.pid
+*.swp
+*.swo
+*~

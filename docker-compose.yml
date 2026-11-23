@@ -1,0 +1,63 @@
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: test_ruby_vue_web
+    volumes:
+      # MOUNT_OPTIONS=:z on SELinux hosts (Fedora/RHEL/CentOS)
+      - ".:/app${MOUNT_OPTIONS:-}"
+    working_dir: /app
+    ports:
+      - "3000:3000"
+    environment:
+      RAILS_ENV: development
+      DATABASE_URL: postgres://dev_user:dev_password@postgres:5432/test_ruby_vue_development
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: >
+      bash -lc '
+        set -euo pipefail
+
+        echo "⏳ Esperando a que Postgres esté listo..."
+        until pg_isready -h postgres -p 5432 -U dev_user; do
+          sleep 2
+        done
+        echo "✅ Postgres listo."
+
+        echo "🔍 Preparando base de datos..."
+        bundle exec rails db:prepare
+
+        echo "🌱 Cargando seeds..."
+        bundle exec rails db:seed
+
+        echo "🎨 Compilando Tailwind..."
+        bundle exec rails tailwindcss:build
+
+        echo "🧹 Limpiando PIDs..."
+        rm -f tmp/pids/server.pid
+
+        echo "🚀 Levantando Rails en http://localhost:3000..."
+        bundle exec rails server -b 0.0.0.0 -p 3000
+      '
+
+  postgres:
+    image: postgres:14
+    container_name: test_ruby_vue_postgres
+    environment:
+      POSTGRES_USER: dev_user
+      POSTGRES_PASSWORD: dev_password
+      POSTGRES_DB: test_ruby_vue_development
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U dev_user -d test_ruby_vue_development"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:

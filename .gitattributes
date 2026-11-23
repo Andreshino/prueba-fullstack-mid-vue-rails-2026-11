@@ -1,0 +1,24 @@
+# Normalize line endings. Critical for bin/* and Dockerfile on Windows.
+* text=auto eol=lf
+
+# Executables and shell scripts
+bin/* text eol=lf
+*.sh text eol=lf
+
+# Docker / YAML / Ruby
+Dockerfile text eol=lf
+docker-compose*.yml text eol=lf
+*.rb text eol=lf
+Gemfile text eol=lf
+Gemfile.lock text eol=lf
+
+# Binary assets
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.eot binary
