@@ -476,26 +476,3 @@ El proyecto requiere **Docker Compose v2** (`docker compose`). Actualiza Docker 
 
 ---
 
-## 15. Alcance de esta base
-
-Incluido:
-
-- Modelo `Employee` con los 6 campos solicitados.
-- Servicio de listado.
-- Endpoint `GET /api/v1/employees`.
-- Controlador web y vista Vue + Tailwind con tabla.
-- Seeds de ejemplo.
-- Docker Compose con Rails + PostgreSQL.
-
-Intencionalmente **no incluido** en la base:
-
-- Autenticación / autorización.
-- Engines.
-- Vuetify.
-- Node, Yarn, Vite o Webpack.
-- Tests automatizados.
-- Configuración de producción.
-- Credenciales cifradas / `master.key` (en desarrollo Rails genera `tmp/development_secret.txt` y no se versiona).
-
-La prueba se desarrolla sobre esta base respetando la arquitectura y el alcance anteriores.
-
